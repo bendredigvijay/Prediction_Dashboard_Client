@@ -1,38 +1,95 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+main {
+  padding: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.title {
+  font-size: 3rem;
+  display: grid;
+  place-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Sidebar */
+.sidebar {
+  background: rgb(20, 20, 21);
+  color: white;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+}
+.logo {
+  font-size: 18px;
+  line-height: 0;
+}
+
+
+
+.routes {
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 5px;
+}
+.link {
+  display: flex;
   color: white;
+  gap: 10px;
+  padding: 5px 10px;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  border-right: 4px solid transparent;
+  transition: width 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.link:hover::before,
+.active::before {
+  width: 100%;
+  border-right-color: white;
 }
+
+
+.link:hover {
+  background-color: rgb(241, 117, 0);
+}
+
+.active {
+  background-color: rgb(241, 117, 0);
+}
+
+.link_text {
+  white-space: nowrap;
+  font-size: 17px;
+}
+
+
+.logout-button button {
+  margin-left: 43px;
+  padding: 8px 26px;
+  background-color: #cc5200; /* Change this color for logout button */
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+

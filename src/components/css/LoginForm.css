@@ -1,0 +1,81 @@
+/* Background styles */
+.bodyLogin{
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: url("../../assets/images/Login/bglogo.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Set the height to 100% of the viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  .login-form-wrapper {
+    display: flex;
+    justify-content: flex-start; /* Align the container to the left side */
+    align-items: center;
+    height: 100vh; /* Set the height of the container */
+    padding-left: 10%; /* Adjust the left padding for centering */
+    padding-right: 10%; /* Adjust the right padding for centering */
+    color: #000;
+  }
+  
+  .login-form-container {
+    background-color: white; /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin-left: 70%;
+    width: 100%;
+  }
+  
+ .logo-image {
+  display: block;
+  margin: -10px auto 20px; /* Adjust margins as needed */
+  width: 150px; /* Set the width to your desired size */
+  height: auto; /* Maintain the aspect ratio */
+}
+  
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    margin-top: 10px;
+
+  }
+  
+  .form-control {
+    width: calc(100% - 16px); /* Adjust input width */
+    padding: 4px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: transparent; /* Transparent input field */
+    color: #000; /* Text color for input fields */
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff; /* Change button color */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .log-in-text {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+  }
+
+  .forgot-password-link{
+    margin-top: 10px;
+  }

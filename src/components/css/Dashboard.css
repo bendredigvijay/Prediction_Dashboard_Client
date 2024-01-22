@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;1,400&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(32, 31, 31);
+  color: #fff;
+  font-family: 'Kanit', sans-serif;}
+
+.container {
+  display: flex;
+}
+
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  background-color: #161616;
+  margin-left: 1%;
+  padding: 1%;
+  margin-right: 30px;
+  margin-top: 10px;
+  box-shadow: 0px 2px 5px rgba(233, 233, 233, 0.2);
+  border-radius: 10px;
+  
+}
+
+.navbar-left,
+.dashboard-title {
+  flex: 1;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  margin-right: 20%;
+}
+
+
+.user-icon {
+  margin-right: 0cm;
+  font-size: 1.5rem;
+
+}
+
+.alarm-icon {
+  margin-left: -120%; 
+  font-size: 1.5rem;
+}
+
+
+/* Navbar1 styles */
+.navbar1 {
+  margin-top: 1.5%;
+  display: flex;
+  background-color: hsl(0, 0%, 9%);
+  margin-left: 1%;
+  padding: 2%;
+  margin-right: 4%;
+  box-shadow: 0px 2px 5px rgba(226, 225, 225, 0.2);
+  position: relative;
+  border-radius: 30px;
+  margin-bottom: 1.2%;
+}
+
+
+.leftSection {
+  display: flex;
+  align-items: center;
+}
+
+/* Dropdown styles */
+.dropdown-container {
+  position: relative;
+  margin-right: 1cm;
+}
+
+.dropdownContent {
+  display: flex;
+  margin-top: 2px;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 103px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 2px;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+}
+
+
+.saveButton {
+  background-color: #e46b08;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 1% 2%;
+  cursor: pointer;
+  margin-left: 65%;
+  font-size: 80%;
+  transition: background-color 0.3s ease; 
+}
+
+.saveButton:hover {
+  background-color:  rgb(49, 49, 48); 
+}
+
+/* Styles for the card container */
+.navbar2 {
+  width: 74em; 
+  max-width: 96.2%;
+  background-color: #161616;
+  padding: 1% ;
+  margin-left: 1%;
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+
+}
+
+/* Styles for the individual card */
+.card {
+  margin-top: 1%;
+  border: 1px solid #a89f9f;
+  border-radius: 8px;
+  padding: 1%; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 76%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  position: relative;
+  margin-bottom: -6px;
+  left: 12%;
+}
+
+.card p {
+  color: #adaaaa;
+  margin-right: 1%; 
+  text-align: right;
+  margin-top: 0.5cm; 
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card h1, .card h3 {
+  color: #ebe9e9;
+  text-align: center;
+}
+
+/* Styles for each section */
+.section {
+  text-align: start;
+}
+
+.card h1 {
+  position: absolute;
+  font-size: large;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  background-color: #6e6b6b;
+  border-radius: 4px;
+  margin: 10;
+}
+.date{
+  position: relative;
+  left: 39%;
+  font-size: small;;
+}
+.card:hover {
+  background-color: #292828; /* Change the background color on hover */
+  transform: scale(1.00); /* Optionally, you can add a scale effect on hover */
+  transition: background-color 0.4s ease, transform 0.5s ease; /* Smooth transition effect */
+}
+
+.pre2 {
+  position: absolute;
+  top: 51%; /* Adjust the positioning of the label */
+  left: 19%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  font-size: 100%;
+  color: rgb(248, 248, 248);
+}
+.pre3{
+  position: absolute;
+  top: -12%; /* Adjust the positioning of the label */
+  left: 49.8%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  font-size: 90%;
+  color: rgb(248, 248, 248);
+}
+.pre1 {
+  position: absolute;
+  top: 51%; /* Adjust the positioning of the label */
+  left: 19%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 100%;
+  color: rgb(248, 248, 248);
+}
+
+.react-calendar {
+  position: absolute;
+  top: calc(85% + 1px); /* Adjust as needed for the desired vertical distance from the button */
+  left: 18%;
+  z-index: 99; /* Ensures the calendar appears above other elements if needed */
+  border: 1px solid #ccc; /* Additional styling as needed */
+}
+
+.custom-button {
+  padding: 4% 20%;
+  background-color: rgb(241, 117, 0);
+  color: rgb(243, 243, 243);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 80%;
+  height: 100%;
+  width: 200%;
+  /* Add any other desired styles */
+
+  /* Hover effect */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.custom-button:hover {
+  background-color: rgb(49, 49, 48); /* Change the background color on hover */
+}
+
+
+@keyframes flowAnimation {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 100%;
+  }
+}
+
+.flow-animation {
+  stroke-dasharray: 5%;
+  stroke-dashoffset: 10%;
+  animation: flowAnimation 7s linear infinite;
+}
