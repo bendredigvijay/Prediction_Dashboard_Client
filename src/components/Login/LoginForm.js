@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../css/LoginForm.css';
@@ -10,47 +10,63 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isRegistering, setRegistering] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If a token is present, redirect to the dashboard
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const loginData = { username, password };
+    setLoading(true);
 
     try {
-      const loginResponse = await axios.post('http://localhost:4000/api/auth/login', loginData);
+      const loginResponse = await axios.post('http://localhost:5000/api/auth/login', {
+        username,
+        password,
+      });
+
       console.log('Login response:', loginResponse.data);
-      // If login is successful, you can redirect the user to another page
-      navigate('/'); // Update this path accordingly
+
+      // Save the token in localStorage
+      localStorage.setItem('token', loginResponse.data.token);
+
+      alert('Login successful!');
+      navigate('/');
     } catch (error) {
       console.error('Error during login:', error.message);
-      // Handle login error, e.g., display an error message to the user
       setError('Invalid username or password');
+    } finally {
+      setLoading(false);
     }
-
-    console.log('Username:', username);
-    console.log('Password:', password);
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    const registerData = { username, email, password };
+    setLoading(true);
 
     try {
-      const registerResponse = await axios.post('http://localhost:4000/api/auth/register', registerData);
+      const registerResponse = await axios.post('http://localhost:5000/api/auth/register', {
+        username,
+        email,
+        password,
+      });
+
       console.log('Register response:', registerResponse.data);
-      // If registration is successful, you can redirect the user to another page
-      navigate('/'); // Update this path accordingly
+      alert('Registration successful! Please log in.');
+      navigate('/login');
     } catch (error) {
       console.error('Error during registration:', error.message);
-      // Handle registration error, e.g., display an error message to the user
       setError('Registration failed');
+    } finally {
+      setLoading(false);
     }
-
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
   };
 
   const handleForgotPassword = () => {
@@ -59,7 +75,7 @@ const LoginForm = () => {
 
   const toggleRegisterMode = () => {
     setRegistering(!isRegistering);
-    setError(''); // Clear any previous error messages
+    setError('');
   };
 
   return (
@@ -69,7 +85,9 @@ const LoginForm = () => {
           <img src={logo} alt="Logo" className="logo-image" />
         </div>
         <div>
-          <p className="log-in-text" style={{color:'black'}}>{isRegistering ? 'Register' : 'Log In'}</p>
+          <p className="log-in-text" style={{ color: 'black' }}>
+            {isRegistering ? 'Register' : 'Log In'}
+          </p>
         </div>
         <form style={{ color: 'black' }} onSubmit={isRegistering ? handleRegister : handleLogin}>
           {isRegistering && (
@@ -108,14 +126,17 @@ const LoginForm = () => {
             />
           </div>
           {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="btn btn-primary">
-            {isRegistering ? 'Register' : 'Login'}
+          <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            {isLoading ? 'Loading...' : isRegistering ? 'Register' : 'Login'}
           </button>
           {!isRegistering && (
-            <div className="register-link" onClick={toggleRegisterMode} style={{ color: 'blue', cursor: 'pointer' }}>
-            Need an account? Register here
-          </div>
-          
+            <div
+              className="register-link"
+              onClick={toggleRegisterMode}
+              style={{ color: 'blue', cursor: 'pointer' }}
+            >
+              Need an account? Register here
+            </div>
           )}
           {isRegistering && (
             <div className="login-link" onClick={toggleRegisterMode}>

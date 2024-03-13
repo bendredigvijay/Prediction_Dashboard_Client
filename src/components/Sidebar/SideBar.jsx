@@ -16,15 +16,20 @@ const routes = [
 
 const SideBar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const handleLogout = () => {
-    // Placeholder for logout functionality
-    console.log('Clicked Logout');
+    // Display a confirmation dialog
+    const isConfirmed = window.confirm('Are you sure you want to log out?');
+    localStorage.removeItem('token');
 
-    // Redirect to the login page
-    navigate('/login'); // replace '/login' with the actual path of your login page
+    if (isConfirmed) {
+      console.log('Clicked Logout');
+      navigate('/login'); 
+    }
   };
+
+
 
   const logoVariants = {
     hidden: { opacity: 0, x: -50 },
@@ -101,7 +106,6 @@ const SideBar = ({ children }) => {
         </section>
 
         {/* Logout button */}
-
         <div
           className="logout-button"
           style={{ position: 'absolute', bottom: '10px', width: '98%' }}
@@ -111,7 +115,6 @@ const SideBar = ({ children }) => {
               onClick={handleLogout}
             >
              <RiLogoutBoxRLine />
-
             </button>
           )}
         </div>

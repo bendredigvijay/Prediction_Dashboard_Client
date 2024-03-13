@@ -1,13 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;1,400&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Kanit', sans-serif;
 }
 
 
-main {
-  padding: 10px;
-}
 
 .title {
   font-size: 3rem;
@@ -27,26 +27,26 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 10px;
+  padding: 0.8rem 0.5rem;
 }
+
 .logo {
-  font-size: 18px;
+  font-size: 1rem;
   line-height: 0;
 }
 
-
-
 .routes {
-  margin-top: 15px;
+  margin-top: rem;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 1rem;
 }
+
 .link {
   display: flex;
   color: white;
-  gap: 10px;
-  padding: 5px 10px;
+  gap: 1rem;
+  padding: 0.4rem 1rem;
   position: relative;
 }
 
@@ -57,16 +57,15 @@ main {
   right: 0;
   bottom: 0;
   width: 0;
-  border-right: 4px solid transparent;
+  border-right: 0.30rem solid transparent;
   transition: width 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
 .link:hover::before,
 .active::before {
-  width: 100%;
+  width: 100rem;
   border-right-color: white;
 }
-
 
 .link:hover {
   background-color: rgb(241, 117, 0);
@@ -78,18 +77,16 @@ main {
 
 .link_text {
   white-space: nowrap;
-  font-size: 17px;
+  font-size: 1rem;
 }
 
-
 .logout-button button {
-  margin-left: 43px;
-  padding: 8px 26px;
-  background-color: #cc5200; /* Change this color for logout button */
+  margin-left: 2.5rem;
+  padding: 0.7rem 2rem;
+  background-color: #cc5200; /* Change this color for the logout button */
   color: #fff;
-  border-radius: 5px;
+  border-radius: 5rem;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-

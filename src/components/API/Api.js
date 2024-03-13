@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:4000/api/auth/login'; // Replace with your backend URL
+const API_BASE_URL = 'http://localhost:4000/api/auth/login'; 
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
