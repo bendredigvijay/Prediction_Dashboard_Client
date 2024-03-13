@@ -120,7 +120,7 @@ const LoginForm = () => {
             <div
               className="register-link"
               onClick={toggleRegisterMode}
-              style={{ color: 'blue', cursor: 'pointer' }}
+              style={{ color: '#ff6200', cursor: 'pointer' }}
             >
               Need an account? Register here
             </div>
