@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Api from '../../Api'; 
 import { useNavigate } from 'react-router-dom';
-import '../css/LoginForm.css';
 import logo from '../../assets/images/Login/logossh.jpg';
+import '../../components/css/LoginForm.css';
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState(''); 
   const [error, setError] = useState('');
-  const [isRegistering, setRegistering] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isRegistering, setRegistering] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,12 +25,8 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const loginResponse = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
-
-      localStorage.setItem('token', loginResponse.data.token);
+      const loginResponse = await Api.login(email, password);
+      localStorage.setItem('token', loginResponse.token);
       navigate('/');
     } catch (error) {
       setError('Invalid email or password');
@@ -44,12 +40,7 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const registerResponse = await axios.post('http://localhost:5000/api/auth/register', {
-        username,
-        email,
-        password,
-      });
-
+      const registerResponse = await Api.register(username, email, password);
       alert('Registration successful! Please log in.');
       navigate('/login');
     } catch (error) {
