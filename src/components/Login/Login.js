@@ -31,7 +31,6 @@ const LoginForm = () => {
       });
 
       localStorage.setItem('token', loginResponse.data.token);
-      alert('Login successful!');
       navigate('/');
     } catch (error) {
       setError('Invalid email or password');
@@ -73,7 +72,7 @@ const LoginForm = () => {
         </div>
         <div>
           <p className="log-in-text" style={{ color: 'black' }}>
-            {isRegistering ? 'Register' : 'Log In'}
+            {isRegistering ? 'Register' : 'Login'}
           </p>
         </div>
         <form style={{ color: 'black' }} onSubmit={isRegistering ? handleRegister : handleLogin}>
@@ -120,7 +119,7 @@ const LoginForm = () => {
             <div
               className="register-link"
               onClick={toggleRegisterMode}
-              style={{ color: '#ff6200', cursor: 'pointer' }}
+              style={{ color: '#f5891e', cursor: 'pointer' }}
             >
               Need an account? Register here
             </div>

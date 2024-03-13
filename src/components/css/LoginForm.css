@@ -29,14 +29,16 @@
 }
 
 .log-in-text {
-  font-size: 25px;
+  font-size: 17px;
   text-align: center;
   margin-bottom: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Custom font */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   color: #333;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow for depth */
-  letter-spacing: 1px; /* Letter spacing for better readability */
-  text-transform: uppercase; /* Uppercase letters */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); 
+  letter-spacing: 1px; 
+  font-weight: bold; 
+
+  text-transform: uppercase; 
 }
 
 
@@ -64,7 +66,7 @@ label {
 .btn-primary {
   width: 100%;
   padding: 10px;
-  background-color: #ff6200;
+  background-color: #f5891e;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -73,7 +75,7 @@ label {
 }
 
 .btn-primary:disabled {
-  background-color: #ff6200;
+  background-color: #f5891e;
   cursor: not-allowed;
 }
 
@@ -83,7 +85,7 @@ label {
   margin-top: 10px;
   font-size: 14px;
   cursor: pointer;
-  color: #ff6200;
+  color: #f5891e;
 }
 
 
