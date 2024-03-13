@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../components/css/Dashboard.css';  
+import '../components/css/Dashboard.css';
 import { HiOutlineArrowSmRight } from 'react-icons/hi';
 import { FaUserCircle, FaBell } from 'react-icons/fa';
 import Select from 'react-select';
@@ -8,7 +8,8 @@ import { VscDebugStepOver } from 'react-icons/vsc';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import 'react-calendar/dist/Calendar.css';
-import SideBar from '../components/Sidebar/SideBar';  
+import SideBar from '../components/Sidebar/SideBar';
+import { useNavigate } from 'react-router-dom';
 
 // Dashboard component
 const Dashboard = () => {
@@ -31,10 +32,19 @@ const Dashboard = () => {
   // State to track whether the Save button has been clicked
   const [isSaveClicked, setIsSaveClicked] = useState(false);
 
-  // UseEffect to fetch fuel and weather data once on component mount
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  // Adding the new useEffect block
   useEffect(() => {
     fetchFuelAndWeatherData();
-  }, [selectedShip, selectedDate]);  // Trigger fetch when selectedShip or selectedDate changes
+  }, [selectedShip, selectedDate]);
 
   // Function to fetch fuel and weather data from the backend
   const fetchFuelAndWeatherData = async () => {
@@ -48,7 +58,7 @@ const Dashboard = () => {
 
       const shipValue = selectedShip.value;
       const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : '';
-      const url = `http://localhost:4000/api/auth/fetchFuelAndWeatherData?ship=${shipValue}&date=${formattedDate}`;
+      const url = `http://localhost:5000/api/auth/fetchFuelAndWeatherData?ship=${shipValue}&date=${formattedDate}`;
 
       const response = await fetch(url);
       const result = await response.json();
@@ -259,11 +269,11 @@ const Dashboard = () => {
                 <label className="pre2">
                   Actual <HiOutlineArrowSmRight />{' '}
                 </label>
-                <svg style={{ position: 'absolute', top: -102, left: '79.7%' }}>
+                <svg style={{ position: 'absolute', top: '-16%', left: '97%', transform: 'translate(-50%, -50%)' }}>
                   {/* Original path with arrow on one end */}
                   <path
                     className="flow-animation"
-                    d="M16 55 Q50 20, 70 15 T130 63"
+                    d="M20 54 Q50 20, 70 15 T130 63"
                     stroke="blue"
                     fill="transparent"
                     marker-start="url(#arrow-reverse)"
@@ -273,7 +283,7 @@ const Dashboard = () => {
                   />
                   <path
                     className="flow-animation"
-                    d="M16 55 Q50 20, 70 15 T130 63"
+                    d="M20 54 Q50 20, 70 15 T130 63"
                     stroke="gray"
                     fill="transparent"
                     marker-start="url(#arrow-reverse)"
@@ -284,7 +294,7 @@ const Dashboard = () => {
 
                   {/* Line below the original path */}
                   <path
-                    d="M16 55 Q50 20, 70 15 T130 59"
+                    d="0M20 54 Q50 20, 70 15 T130 63"
                     stroke="green"
                     strokeOpacity="0.07"
                     fill="transparent"
@@ -294,15 +304,15 @@ const Dashboard = () => {
                   <defs>
                     <marker
                       id="arrow-reverse"
-                      markerWidth="13"
-                      markerHeight="100"
-                      refX="10"
-                      refY="10"
+                      markerWidth="5%"
+                      markerHeight="16%"
+                      refX="2%"
+                      refY="7%"
                       orient="auto"
                       markerUnits="userSpaceOnUse"
                     >
                       <path
-                        d="M40,0 L20,20 L5,9.6 Z"
+                        d="M90,0 L20,20 L5,9.6 Z"
                         fill="grey"
                         className="arrowhead-animation"
                       />
