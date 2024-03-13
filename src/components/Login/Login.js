@@ -1,93 +1,152 @@
-import React, { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import axios from "axios";
-import loginStyle from "../css/Login.module.css";
-import backgroundImage from "../../assets/images/Login/ship.png";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../css/LoginForm.css';
+import logo from '../../assets/images/Login/logossh.jpg';
 
-const Login = ({ setUserState }) => {
+const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [isRegistering, setRegistering] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [formErrors, setFormErrors] = useState({});
-  const [user, setUserDetails] = useState({ email: "", password: "" });
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setUserDetails({ ...user, [name]: value });
-  };
-
-  const validateForm = (values) => {
-    const errors = {};
-    const regex = /^[^\s+@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.email) {
-      errors.email = "Email is required";
-    } else if (!regex.test(values.email)) {
-      errors.email = "Please enter a valid email address";
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If a token is present, redirect to the dashboard
+      navigate('/');
     }
-    if (!values.password) {
-      errors.password = "Password is required";
-    }
-    return errors;
-  };
+  }, [navigate]);
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const errors = validateForm(user);
-    setFormErrors(errors);
-    if (Object.keys(errors).length === 0) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/auth/login",
-          { email: user.email, password: user.password }
-        );
-        alert(response.data.message); // Display message from the server response
-        if (response.status === 200) {
-          setUserState(response.data.user);
-          navigate("/dashboard", { replace: true }); // Navigate to the "/Register" route
-        } else {
-          alert("Login failed. Please try again.");
-        }
-      } catch (error) {
-        console.error("Login error:", error);
-        alert("Login failed. Please try again.");
-      }
+
+    setLoading(true);
+
+    try {
+      const loginResponse = await axios.post('http://localhost:5000/api/auth/login', {
+        username,
+        password,
+      });
+
+      console.log('Login response:', loginResponse.data);
+
+      // Save the token in localStorage
+      localStorage.setItem('token', loginResponse.data.token);
+
+      alert('Login successful!');
+      navigate('/');
+    } catch (error) {
+      console.error('Error during login:', error.message);
+      setError('Invalid username or password');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const registerResponse = await axios.post('http://localhost:5000/api/auth/register', {
+        username,
+        email,
+        password,
+      });
+
+      console.log('Register response:', registerResponse.data);
+      alert('Registration successful! Please log in.');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error during registration:', error.message);
+      setError('Registration failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = () => {
+    console.log('Forgot Password?');
+  };
+
+  const toggleRegisterMode = () => {
+    setRegistering(!isRegistering);
+    setError('');
   };
 
   return (
-    <div className={loginStyle.login} style={{ backgroundImage: `url(${backgroundImage})` }}>
-    <div className="logoSmartShip">
-      <img
-        // src={logo}
-        // alt="Logo"
-        style={{ width: "50%", marginLeft: "25%", marginTop: "-60%", height: "auto" }}
-      />
-    </div>
-      <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={changeHandler}
-        />
-        <p className={loginStyle.error}>{formErrors.email}</p>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={changeHandler}
-        />
-        <p className={loginStyle.error}>{formErrors.password}</p>
-        <button className={loginStyle.button_common} type="submit">
-          Login
-        </button>
-      </form>
-      <NavLink to="/Register">Don't have an account? Register</NavLink>
+    <div className="bodyLogin">
+      <div className="login-form-container">
+        <div className="logo-container">
+          <img src={logo} alt="Logo" className="logo-image" />
+        </div>
+        <div>
+          <p className="log-in-text" style={{ color: 'black' }}>
+            {isRegistering ? 'Register' : 'Log In'}
+          </p>
+        </div>
+        <form style={{ color: 'black' }} onSubmit={isRegistering ? handleRegister : handleLogin}>
+          {isRegistering && (
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          )}
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <div className="error-message">{error}</div>}
+          <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            {isLoading ? 'Loading...' : isRegistering ? 'Register' : 'Login'}
+          </button>
+          {!isRegistering && (
+            <div
+              className="register-link"
+              onClick={toggleRegisterMode}
+              style={{ color: 'blue', cursor: 'pointer' }}
+            >
+              Need an account? Register here
+            </div>
+          )}
+          {isRegistering && (
+            <div className="login-link" onClick={toggleRegisterMode}>
+              Already have an account? Log In here
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginForm;
