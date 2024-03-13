@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import 'react-calendar/dist/Calendar.css';
 import SideBar from '../components/Sidebar/SideBar';
+import Api from '../Api'; 
 import { useNavigate } from 'react-router-dom';
 
 // Dashboard component
@@ -55,16 +56,10 @@ const Dashboard = () => {
         setWeatherData({});
         return;
       }
-
       const shipValue = selectedShip.value;
       const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : '';
-      const url = `http://localhost:5000/api/auth/fetchFuelAndWeatherData?ship=${shipValue}&date=${formattedDate}`;
-
-      const response = await fetch(url);
-      const result = await response.json();
-
+      const result = await Api.fetchFuelAndWeatherData(shipValue, formattedDate);
       console.log('Received data from backend:', result);
-
       setFuelData(result.fuelData || []);
       setActualFuelData(result.actualFuelData || []);
       setWeatherData(result.weatherData || {});
@@ -74,38 +69,40 @@ const Dashboard = () => {
   };
 
   // Function to customize tile content in the calendar based on weather data
-  const tileContent = ({ date, view }) => {
-    try {
-      const dateString = date.toISOString().split('T')[0];
-      const weatherCondition = weatherData.date[dateString];
+// Function to customize tile content in the calendar based on weather data
+const tileContent = ({ date, view }) => {
+  try {
+    const dateString = date.toISOString().split('T')[0];
+    const weatherCondition = weatherData.date[dateString];
 
-      let color = '';
-      if (weatherCondition === 'good') {
-        color = 'green';
-      } else if (weatherCondition === 'moderate') {
-        color = 'orange';
-      } else if (weatherCondition === 'bad') {
-        color = 'red';
-      }
-
-      if (view === 'month') {
-        return (
-          <div
-            style={{
-              backgroundColor: color,
-              width: '90%',
-              height: '100%',
-              borderRadius: '100%',
-            }}
-          />
-        );
-      }
-    } catch (error) {
-      console.error('Error in tileContent:', error.message);
+    let color = '';
+    if (weatherCondition === 'good') {
+      color = 'green';
+    } else if (weatherCondition === 'moderate') {
+      color = 'orange';
+    } else if (weatherCondition === 'bad') {
+      color = 'red';
     }
 
-    return null;
-  };
+    if (view === 'month') {
+      return (
+        <div
+          style={{
+            backgroundColor: color,
+            width: '90%',
+            height: '100%',
+            borderRadius: '100%',
+          }}
+        />
+      );
+    }
+  } catch (error) {
+    console.error('Error in tileContent:', error.message);
+  }
+
+  return null;
+};
+
 
   // Styles for the dropdown
   const customStyles = {
