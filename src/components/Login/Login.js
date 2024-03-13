@@ -6,8 +6,8 @@ import logo from '../../assets/images/Login/logossh.jpg';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRegistering, setRegistering] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -16,32 +16,25 @@ const LoginForm = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // If a token is present, redirect to the dashboard
       navigate('/');
     }
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
       const loginResponse = await axios.post('http://localhost:5000/api/auth/login', {
-        username,
+        email,
         password,
       });
 
-      console.log('Login response:', loginResponse.data);
-
-      // Save the token in localStorage
       localStorage.setItem('token', loginResponse.data.token);
-
       alert('Login successful!');
       navigate('/');
     } catch (error) {
-      console.error('Error during login:', error.message);
-      setError('Invalid username or password');
+      setError('Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -58,19 +51,13 @@ const LoginForm = () => {
         password,
       });
 
-      console.log('Register response:', registerResponse.data);
       alert('Registration successful! Please log in.');
       navigate('/login');
     } catch (error) {
-      console.error('Error during registration:', error.message);
       setError('Registration failed');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleForgotPassword = () => {
-    console.log('Forgot Password?');
   };
 
   const toggleRegisterMode = () => {
@@ -92,25 +79,25 @@ const LoginForm = () => {
         <form style={{ color: 'black' }} onSubmit={isRegistering ? handleRegister : handleLogin}>
           {isRegistering && (
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="username">Username</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
           )}
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
+              type="email"
               className="form-control"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
