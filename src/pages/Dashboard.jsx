@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import '../components/css/Dashboard.css';
-import { HiOutlineArrowSmRight } from 'react-icons/hi';
-import { FaUserCircle, FaBell } from 'react-icons/fa';
-import Select from 'react-select';
-import Calendar from 'react-calendar';
-import { VscDebugStepOver } from 'react-icons/vsc';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import 'react-calendar/dist/Calendar.css';
-import SideBar from '../components/Sidebar/SideBar';
-import Api from '../Api'; 
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "../components/css/Dashboard.css";
+import { HiOutlineArrowSmRight } from "react-icons/hi";
+import { FaUserCircle, FaBell } from "react-icons/fa";
+import Select from "react-select";
+import Calendar from "react-calendar";
+import { VscDebugStepOver } from "react-icons/vsc";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import "react-calendar/dist/Calendar.css";
+import SideBar from "../components/Sidebar/SideBar";
+import Api from "../Api";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar/navbar";
+import Button from "@mui/material/Button";
 
 const Dashboard = () => {
-  const options = [
-    { value: 'Brazil', label: 'Brazil' }
-  ];
-
+  const options = [{ value: "Brazil", label: "Brazil" }];
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedShip, setSelectedShip] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -27,21 +26,24 @@ const Dashboard = () => {
     selectedShip: null,
     selectedDate: null,
   });
-
   const [isSaveClicked, setIsSaveClicked] = useState(false);
-
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [navigate]);
 
   useEffect(() => {
     fetchFuelAndWeatherData();
   }, [selectedShip, selectedDate]);
+
+  const toggleHover = () => {
+    setIsButtonHovered(!isButtonHovered);
+  };
 
   const fetchFuelAndWeatherData = async () => {
     try {
@@ -52,60 +54,67 @@ const Dashboard = () => {
         return;
       }
       const shipValue = selectedShip.value;
-      const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : '';
-      const result = await Api.fetchFuelAndWeatherData(shipValue, formattedDate);
-      console.log('Received data from backend:', result);
+      const formattedDate = selectedDate
+        ? selectedDate.toISOString().split("T")[0]
+        : "";
+      const result = await Api.fetchFuelAndWeatherData(
+        shipValue,
+        formattedDate
+      );
+      console.log("Received data from backend:", result);
       setFuelData(result.fuelData || []);
       setActualFuelData(result.actualFuelData || []);
       setWeatherData(result.weatherData || {});
     } catch (error) {
-      console.error('Error fetching fuel and weather data from backend:', error.message);
+      console.error(
+        "Error fetching fuel and weather data from backend:",
+        error.message
+      );
     }
   };
 
-const tileContent = ({ date, view }) => {
-  try {
-    const dateString = date.toISOString().split('T')[0];
-    const weatherCondition = weatherData.date[dateString];
+  const tileContent = ({ date, view }) => {
+    try {
+      const dateString = date.toISOString().split("T")[0];
+      const weatherCondition = weatherData.date[dateString];
 
-    let color = '';
-    if (weatherCondition === 'good') {
-      color = 'green';
-    } else if (weatherCondition === 'moderate') {
-      color = 'orange';
-    } else if (weatherCondition === 'bad') {
-      color = 'red';
+      let color = "";
+      if (weatherCondition === "good") {
+        color = "green";
+      } else if (weatherCondition === "moderate") {
+        color = "orange";
+      } else if (weatherCondition === "bad") {
+        color = "red";
+      }
+
+      if (view === "month") {
+        return (
+          <div
+            style={{
+              backgroundColor: color,
+              width: "90%",
+              height: "100%",
+              borderRadius: "100%",
+            }}
+          />
+        );
+      }
+    } catch (error) {
+      console.error("Error in tileContent:", error.message);
     }
 
-    if (view === 'month') {
-      return (
-        <div
-          style={{
-            backgroundColor: color,
-            width: '90%',
-            height: '100%',
-            borderRadius: '100%',
-          }}
-        />
-      );
-    }
-  } catch (error) {
-    console.error('Error in tileContent:', error.message);
-  }
-
-  return null;
-};
-
+    return null;
+  };
 
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      width: '140px',
-      fontSize: '16px',
+      width: "140px",
+      fontSize: "16px",
     }),
     option: (provided) => ({
       ...provided,
-      color: 'black',
+      color: "black",
     }),
   };
 
@@ -131,23 +140,13 @@ const tileContent = ({ date, view }) => {
   return (
     <div className="container">
       <div>
-        <SideBar /> 
+        <SideBar />
       </div>
       <div>
-        <div className="navbar">
-          <div className="navbar-left">
-            <span className="dashboard-title">Dashboard</span>
-          </div>
-          <div className="navbar-right">
-            <span className="user-icon">
-              <FaUserCircle />
-            </span>
-            <span className="alarm-icon">
-              <FaBell />
-            </span>
-          </div>
-        </div>
+      <div style={{marginLeft: '0.02cm', marginRight: "-0.7cm", boxShadow: '0px 2px 5px rgba(255, 255, 255, 0.2)' }}>
 
+      <Navbar />
+        </div>
         <div className="navbar1">
           <div className="dropdown-container">
             <Select
@@ -160,9 +159,16 @@ const tileContent = ({ date, view }) => {
           </div>
 
           <div className="rightSection">
-            <button onClick={toggleCalendar} className="custom-button">
-              {selectedDate ? selectedDate.toDateString() : 'Calendar'}
-            </button>
+            <Button
+              variant="contained"
+              onClick={toggleCalendar}
+              className={`custom-button ${isButtonHovered ? "button-hovered" : ""}`}
+              onMouseEnter={toggleHover}
+              onMouseLeave={toggleHover}
+              style={{ fontSize: "0.rem", backgroundColor: "orange" }}
+            >
+              {selectedDate ? selectedDate.toDateString() : "Calendar"}
+            </Button>
             {showCalendar && (
               <Calendar
                 onChange={handleDateChange}
@@ -171,9 +177,16 @@ const tileContent = ({ date, view }) => {
               />
             )}
           </div>
-          <button onClick={handleSaveButtonClick} className="saveButton">
+
+          <Button
+            variant="contained"
+            onClick={handleSaveButtonClick}
+            className="saveButton"
+            disableElevation
+            style={{ fontSize: "0.88rem", marginLeft: "40rem", backgroundColor: "orange" }}
+          >
             Save
-          </button>
+          </Button>
         </div>
 
         <div className="navbar2">
@@ -181,37 +194,37 @@ const tileContent = ({ date, view }) => {
             fuelData.map((item, index) => (
               <div key={index} className="card">
                 <label className="pre3">
-                  Predicted And Actual Data Table According to Noon Report
+                  Predicted And Actual Data Table
                 </label>
                 <label className="pre1">
                   Predicted <HiOutlineArrowSmRight />
                 </label>
                 <h1 className="header">
-                  {headerInfo.selectedShip || 'Select a Ship'}
-                  <span className="date">{headerInfo.selectedDate || ''}</span>
+                  {headerInfo.selectedShip || "Select a Ship"}
+                  <span className="date">{headerInfo.selectedDate || ""}</span>
                 </h1>
                 <p>
-                  ME Fuel Cones <VscDebugStepOver />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.meFuelCones : 'N/A'}
+                  ME Fuel Cones <VscDebugStepOver />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.meFuelCones : "N/A"}
                   </span>
                 </p>
                 <p>
                   AE Fuel Cones <VscDebugStepOver />
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.aeFuelCones : 'N/A'}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.aeFuelCones : "N/A"}
                   </span>
                 </p>
                 <p>
-                  ME RPM <VscDebugStepOver />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.meRPM : 'N/A'}
+                  ME RPM <VscDebugStepOver />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.meRPM : "N/A"}
                   </span>
                 </p>
                 <p>
-                  TC RPM <VscDebugStepOver />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.tcRPM : 'N/A'}
+                  TC RPM <VscDebugStepOver />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.tcRPM : "N/A"}
                   </span>
                 </p>
               </div>
@@ -225,8 +238,8 @@ const tileContent = ({ date, view }) => {
                 Predicted <HiOutlineArrowSmRight />
               </label>
               <h1 className="header">
-                {headerInfo.selectedShip || 'Select a Ship'}
-                <span className="date">{headerInfo.selectedDate || ''}</span>
+                {headerInfo.selectedShip || "Select a Ship"}
+                <span className="date">{headerInfo.selectedDate || ""}</span>
               </h1>
               <p>
                 ME Fuel Cones <VscDebugStepOver /> N/A
@@ -247,9 +260,16 @@ const tileContent = ({ date, view }) => {
             actualFuelData.map((item, index) => (
               <div key={index} className="card">
                 <label className="pre2">
-                  Actual <HiOutlineArrowSmRight />{' '}
+                  Actual <HiOutlineArrowSmRight />{" "}
                 </label>
-                <svg style={{ position: 'absolute', top: '-16%', left: '97%', transform: 'translate(-50%, -50%)' }}>
+                <svg
+                  style={{
+                    position: "absolute",
+                    top: "-16%",
+                    left: "97%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
                   <path
                     className="flow-animation"
                     d="M20 54 Q50 20, 70 15 T130 63"
@@ -297,31 +317,31 @@ const tileContent = ({ date, view }) => {
                   </defs>
                 </svg>
                 <h1 className="header">
-                  {headerInfo.selectedShip || 'Select a Ship'}
-                  <span className="date">{headerInfo.selectedDate || ''}</span>
+                  {headerInfo.selectedShip || "Select a Ship"}
+                  <span className="date">{headerInfo.selectedDate || ""}</span>
                 </h1>
                 <p>
-                  ME Fuel Cones <FontAwesomeIcon icon={faArrowRight} />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.meFuelCones : 'N/A'}
+                  ME Fuel Cones <FontAwesomeIcon icon={faArrowRight} />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.meFuelCones : "N/A"}
                   </span>
                 </p>
                 <p>
-                  AE Fuel Cones <FontAwesomeIcon icon={faArrowRight} />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.aeFuelCones : 'N/A'}
+                  AE Fuel Cones <FontAwesomeIcon icon={faArrowRight} />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.aeFuelCones : "N/A"}
                   </span>
                 </p>
                 <p>
-                  ME RPM <FontAwesomeIcon icon={faArrowRight} />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.meRPM : 'N/A'}
+                  ME RPM <FontAwesomeIcon icon={faArrowRight} />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.meRPM : "N/A"}
                   </span>
                 </p>
                 <p>
-                  TC RPM <FontAwesomeIcon icon={faArrowRight} />{' '}
-                  <span style={{ color: 'lightblue' }}>
-                    {selectedShip && selectedDate ? item.tcRPM : 'N/A'}
+                  TC RPM <FontAwesomeIcon icon={faArrowRight} />{" "}
+                  <span style={{ color: "lightblue" }}>
+                    {selectedShip && selectedDate ? item.tcRPM : "N/A"}
                   </span>
                 </p>
               </div>
@@ -329,11 +349,11 @@ const tileContent = ({ date, view }) => {
           ) : (
             <div key="default-actual-card" className="card">
               <label className="pre2">
-                Actual <HiOutlineArrowSmRight />{' '}
+                Actual <HiOutlineArrowSmRight />{" "}
               </label>
               <h1 className="header">
-                {headerInfo.selectedShip || 'Select a Ship'}
-                <span className="date">{headerInfo.selectedDate || ''}</span>
+                {headerInfo.selectedShip || "Select a Ship"}
+                <span className="date">{headerInfo.selectedDate || ""}</span>
               </h1>
               <p>
                 ME Fuel Cones <FontAwesomeIcon icon={faArrowRight} /> N/A

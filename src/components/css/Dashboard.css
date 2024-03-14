@@ -3,8 +3,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: rgb(32, 31, 31);
-  color: #fff;
+  background-color: rgb(3, 3, 3);
+  color: #000000;
   font-family: 'Kanit', sans-serif;}
 
 .container {
@@ -12,47 +12,11 @@ body {
  
 }
 
-/* Navbar styles */
-.navbar {
-  display: flex;
-  background-color: #161616;
-  margin-left: 1vw;
-  padding: 0.5vw;
-  margin-right: -2vw;
-  margin-top: 1rem;
-  box-shadow: 0px 2px 5px rgba(233, 233, 233, 0.2);
-  border-radius: 1vw;
-  
-}
-
-.navbar-left,
-.dashboard-title {
-  flex: 1;
-}
-
-.dashboard-title {
-  font-size: 1.8rem;
-  margin-right: 20rem;
-}
-
-
-.user-icon {
-  margin-left: -2rem; 
-  font-size: 1.5rem;
-
-}
-
-.alarm-icon {
-  margin-left: -4rem; 
-  font-size: 1.5rem;
-}
-
-
 /* Navbar1 styles */
 .navbar1 {
   margin-top: 1rem;
   display: flex;
-  background-color: hsl(0, 0%, 9%);
+  background-color: hsl(0, 0%, 0%);
   margin-left: 4vw;
   padding: 1.8vw;
   margin-right: 0.1vw;
@@ -85,23 +49,9 @@ body {
   border-radius: 2rem;
 }
 
-.rightSection {
-  display: flex;
-  align-items: center;
-}
 
 
-.saveButton {
-  background-color: #f5891e;
-  color: white;
-  border: none;
-  border-radius: 1rem;
-  padding: 0.5rem 2rem;
-  cursor: pointer;
-  margin-left: 46vw;
-  font-size: 1rem;
-  transition: background-color 0.3s ease; 
-}
+
 
 .saveButton:hover {
   background-color:  rgb(49, 49, 48); 
@@ -110,7 +60,7 @@ body {
 /* Styles for the card container */
 .navbar2 {
   width: 82vw; 
-  background-color: #161616;
+  background-color: #000000;
   padding: 1.3vw ;
   margin-left: 4.0vw;
   box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
@@ -192,8 +142,8 @@ body {
 }
 .pre3{
   position: absolute;
-  top: -1.8vw;
-  left: 29vw;
+  top: -1.7rem;
+  left: 25rem;
   margin-bottom: 1vw;
   transform: translateX(-50%);
   border-radius: 4rem;
