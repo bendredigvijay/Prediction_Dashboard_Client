@@ -12,13 +12,11 @@ import SideBar from '../components/Sidebar/SideBar';
 import Api from '../Api'; 
 import { useNavigate } from 'react-router-dom';
 
-// Dashboard component
 const Dashboard = () => {
   const options = [
     { value: 'Brazil', label: 'Brazil' }
   ];
 
-  // States for selected date, selected ship, calendar visibility, fuel data, and weather data
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedShip, setSelectedShip] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -30,7 +28,6 @@ const Dashboard = () => {
     selectedDate: null,
   });
 
-  // State to track whether the Save button has been clicked
   const [isSaveClicked, setIsSaveClicked] = useState(false);
 
   const navigate = useNavigate();
@@ -42,12 +39,10 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
-  // Adding the new useEffect block
   useEffect(() => {
     fetchFuelAndWeatherData();
   }, [selectedShip, selectedDate]);
 
-  // Function to fetch fuel and weather data from the backend
   const fetchFuelAndWeatherData = async () => {
     try {
       if (!selectedShip) {
@@ -68,8 +63,6 @@ const Dashboard = () => {
     }
   };
 
-  // Function to customize tile content in the calendar based on weather data
-// Function to customize tile content in the calendar based on weather data
 const tileContent = ({ date, view }) => {
   try {
     const dateString = date.toISOString().split('T')[0];
@@ -104,7 +97,6 @@ const tileContent = ({ date, view }) => {
 };
 
 
-  // Styles for the dropdown
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -117,18 +109,15 @@ const tileContent = ({ date, view }) => {
     }),
   };
 
-  // Function to toggle calendar visibility
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
   };
 
-  // Function to handle date change
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setShowCalendar(false);
   };
 
-  // Function to handle save button click
   const handleSaveButtonClick = () => {
     if (selectedShip && selectedDate) {
       setHeaderInfo({
@@ -139,14 +128,12 @@ const tileContent = ({ date, view }) => {
     }
   };
 
-  // Return the JSX for the Dashboard component
   return (
     <div className="container">
       <div>
-        <SideBar /> {/* Rendering the Sidebar component */}
+        <SideBar /> 
       </div>
       <div>
-        {/* Navbar section */}
         <div className="navbar">
           <div className="navbar-left">
             <span className="dashboard-title">Dashboard</span>
@@ -161,7 +148,6 @@ const tileContent = ({ date, view }) => {
           </div>
         </div>
 
-        {/* Dropdown and Calendar section */}
         <div className="navbar1">
           <div className="dropdown-container">
             <Select
@@ -190,9 +176,7 @@ const tileContent = ({ date, view }) => {
           </button>
         </div>
 
-        {/* Data display section */}
         <div className="navbar2">
-          {/* Display predicted data */}
           {isSaveClicked && fuelData.length > 0 ? (
             fuelData.map((item, index) => (
               <div key={index} className="card">
@@ -259,7 +243,6 @@ const tileContent = ({ date, view }) => {
             </div>
           )}
 
-          {/* Display actual data */}
           {isSaveClicked && actualFuelData.length > 0 ? (
             actualFuelData.map((item, index) => (
               <div key={index} className="card">
@@ -267,7 +250,6 @@ const tileContent = ({ date, view }) => {
                   Actual <HiOutlineArrowSmRight />{' '}
                 </label>
                 <svg style={{ position: 'absolute', top: '-16%', left: '97%', transform: 'translate(-50%, -50%)' }}>
-                  {/* Original path with arrow on one end */}
                   <path
                     className="flow-animation"
                     d="M20 54 Q50 20, 70 15 T130 63"
@@ -289,7 +271,6 @@ const tileContent = ({ date, view }) => {
                     transform="rotate(90 120 110)"
                   />
 
-                  {/* Line below the original path */}
                   <path
                     d="0M20 54 Q50 20, 70 15 T130 63"
                     stroke="green"
@@ -297,7 +278,6 @@ const tileContent = ({ date, view }) => {
                     fill="transparent"
                     transform="rotate(90 120 110)"
                   />
-                  {/* Arrowhead definition */}
                   <defs>
                     <marker
                       id="arrow-reverse"
