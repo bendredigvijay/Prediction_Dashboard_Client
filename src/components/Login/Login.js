@@ -23,10 +23,13 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const loginResponse = await Api.login(email, password);
       localStorage.setItem('token', loginResponse.token);
+      // Save user's email and name to local storage
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userName', loginResponse.name); // Assuming loginResponse contains the user's name
       navigate('/');
     } catch (error) {
       setError('Invalid email or password');
@@ -34,6 +37,7 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
+  
 
   const handleRegister = async (e) => {
     e.preventDefault();

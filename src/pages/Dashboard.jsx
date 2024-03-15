@@ -143,7 +143,7 @@ const Dashboard = () => {
         <SideBar />
       </div>
       <div>
-      <div style={{marginLeft: '0.02cm', marginRight: "-0.7cm", boxShadow: '0px 2px 5px rgba(255, 255, 255, 0.2)' }}>
+      <div style={{marginLeft: '0.02cm', marginRight: "-1.7rem", boxShadow: '0px 2px 5px rgba(255, 255, 255, 0.2)' }}>
 
       <Navbar />
         </div>
@@ -158,7 +158,7 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="rightSection">
+          <div className="rightSection"style={{marginLeft: '0.02cm', marginRight: "3rem", boxShadow: '0px 2px 5px rgba(255, 255, 255, 0.2)' }}>
             <Button
               variant="contained"
               onClick={toggleCalendar}
@@ -372,6 +372,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 
