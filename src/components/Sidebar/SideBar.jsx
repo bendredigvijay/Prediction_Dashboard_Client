@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaHome, FaSignOutAlt } from 'react-icons/fa';
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import logoImage from '../../assets/images/Sidebar/logossh-removebg-preview (1).png';
 
 const routes = [
@@ -24,10 +23,10 @@ const SideBar = ({ children }) => {
   const handleLogout = () => {
     // Display a confirmation dialog
     const isConfirmed = window.confirm('Are you sure you want to log out?');
-    localStorage.removeItem('token');
 
     if (isConfirmed) {
       console.log('Clicked Logout');
+      localStorage.removeItem('token');
       navigate('/login');
     }
   };
